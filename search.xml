@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>数据结构基本整理</title>
+      <link href="/2021/09/20/shu-ju-jie-gou/"/>
+      <url>/2021/09/20/shu-ju-jie-gou/</url>
+      
+        <content type="html"><![CDATA[<ul><li>什么是数据结构：<ul><li>数据结构就是把数据元素按照一定的关系组织起来的集合，用来组织和存储数据</li></ul></li><li>数据结构的分类<ul><li>逻辑结构和物理结构<ul><li>逻辑结构：从具体的问题中抽象出来的模型，是抽象意义上的结构<ul><li>集合结构：数据元素除了属于同一个集合外，他们之间没有任何其他的关系</li><li>线性结构：线性结构的数据元素之间存在一对一的关系</li><li>树形结构：树形结构的数据元素之间存在一对多的层次关系</li><li>图形结构：图形结构的数据元素是多对多的关系</li></ul></li><li>物理结构：逻辑结构在计算机中真正的表示方式<ul><li>顺序存储结构（数组）： 数据元素放到连续的存储单元里面</li><li>链式存储结构：数据元素放到任意的存储单元里面，可以连续也可以不连续，在链式结构中引进了指针存放数据元素的地址，这样通过地址就可以找到相关数据元素的位置</li></ul></li></ul></li></ul></li><li>什么是算法？<ul><li>根据一定的条件，对一些数据进行计算，得到需要的结果</li></ul></li><li>一个优秀算法追求的两个目标：<ul><li>花最少的时间完成需求</li><li>占用最少的内存空间完成需求</li></ul></li><li>时间复杂度分析：【核心操作的次数和输入规模关联起来】<ul><li>算法函数中的常数可以忽略</li><li>算法函数中最高次幂的常数因子可以忽略</li><li>算法函数中最高次幂越小，算法效率月高</li><li>编写程序在计算机上运行消耗的时间取决的因素：<ul><li>算法采用的策略和方案</li><li>编译产生的代码质量</li><li>问题输入的规模</li><li>机器执行指令的速度</li></ul></li><li>大 O 表示法以下几个规则使用：<ul><li>用常数 1 取代运行时间中所有加法常数【O(1)】</li><li>在修改后的运行次数中，只保留高阶项【O(n)】</li><li>如果最高阶项存在。且常数因子不为 1.则去除与这个项相乘的常数【O(n^2)】</li></ul></li><li>函数渐近增长：<ul><li>给定两个函数：f(n)和 g(n)，如果存在一个整数 N，使得对于所有的 n&gt;N,f(n)总是比 g（n）大，那么我们说 f(n)的增长渐近快于 g(n)</li></ul></li><li>常见的大 O 阶<ul><li>线性阶：随着输入规模的扩大，对应计算次数呈直线增长</li><li>平方阶：双层嵌套</li><li>立方阶：三层嵌套循环</li><li>对数阶：</li><li>常数阶：</li></ul></li><li>时间复杂度：<ul><li>O(1)&lt;O(logn)&lt;O(n)&lt;O(nlogn)&lt;O(n^2)&lt;O(n^3)</li></ul></li><li>输入规模的增大，时间成本会急剧增大，所以，我们的算法，尽可能的追求的是 O(1)、O(logn)、O(n),O(nlogn)这几种时间复杂度，</li></ul></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 数据结构 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 存储结构 </tag>
+            
+            <tag> 算法 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>索引的基本使用</title>
+      <link href="/2021/09/20/suo-yin-pian/"/>
+      <url>/2021/09/20/suo-yin-pian/</url>
+      
+        <content type="html"><![CDATA[<h3 id="索引的基本分类"><a href="#索引的基本分类" class="headerlink" title="索引的基本分类"></a>索引的基本分类</h3><ul><li>普通索引：没有任何约束，主要用于提高查询效率</li><li>唯一索引：增加数据的唯一性约束，一张数据表可以有多个唯一索引</li><li>主键索引：在唯一索引的基础上增加了不为空的约束</li><li>聚集索引：按照主键排序存储数据</li></ul><h3 id="什么情况下使用索引："><a href="#什么情况下使用索引：" class="headerlink" title="什么情况下使用索引："></a>什么情况下使用索引：</h3><ul><li>字段的数值有唯一性的限制</li><li>频繁作为 where 查询条件的字段，尤其数据表大的情况下效果更明显</li><li>需要经常 GROUP BY 和 ORDER BY 的列</li><li>UPDATE、DELETE 的 where 条件列，一般也需要创建索引</li><li>DISTINCT 字段需要创建索引</li><li>多表连接 JOIN 时<ul><li>连接的表的数量尽量不要超过 3 张</li><li>对 where 条件创建索引</li><li>对用于连接的字段创建索引，并且该字段在多张表中的类型必须一致</li></ul></li></ul><h3 id="什么时候不需要创建索引"><a href="#什么时候不需要创建索引" class="headerlink" title="什么时候不需要创建索引"></a>什么时候不需要创建索引</h3><ul><li>WHERE(GRUOP BY,ORDER BY)里面用不到的字段，不需要创建索引</li><li>表记录太少，比如少于 1000，是不需要创建索引的</li><li>字段表中有大量重复数据，不用创建索引</li><li>频繁更新的字段不一定要创建索引，维护成本高</li></ul><h3 id="什么情况下索引失效"><a href="#什么情况下索引失效" class="headerlink" title="什么情况下索引失效"></a>什么情况下索引失效</h3><ul><li>对索引进行了表达式计算</li><li>对索引使用函数</li><li>在 WHERE 子句中，如果是 OR 条件，有一个条件没有进行索引，其他的索引也会失效</li><li>使用 LIKE 进行模糊查询的时候，后面不能是%</li><li>索引列尽量设置为 NOT NULL 约束(可以更好的利用索引)</li><li>使用联合索引 的时候要注意最左原则</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> sql </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 索引 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>自定义archetype步骤</title>
+      <link href="/2021/09/20/zi-ding-yi-archetype-bu-zou/"/>
+      <url>/2021/09/20/zi-ding-yi-archetype-bu-zou/</url>
+      
+        <content type="html"><![CDATA[<h1 id="自定义-archetype-步骤"><a href="#自定义-archetype-步骤" class="headerlink" title="自定义 archetype 步骤"></a>自定义 archetype 步骤</h1><h4 id="创建一个模板项目"><a href="#创建一个模板项目" class="headerlink" title="创建一个模板项目"></a>创建一个模板项目</h4><h4 id="从当前项目创建-archetype"><a href="#从当前项目创建-archetype" class="headerlink" title="从当前项目创建 archetype"></a>从当前项目创建 archetype</h4>  <img src="https://raw.githubusercontent.com/ycshang123/image-hosting/master/44.4cjlpxydfgc0.jpg" width="600px" height="160px"><h5 id="如果会报错，把-setting-xml-放到用户模块下的-m2-文件夹下即可"><a href="#如果会报错，把-setting-xml-放到用户模块下的-m2-文件夹下即可" class="headerlink" title="如果会报错，把 setting.xml 放到用户模块下的.m2 文件夹下即可**"></a>如果会报错，把 setting.xml 放到用户模块下的.m2 文件夹下即可**</h5><p>重复上一条命令即可构建成功</p><p><img src="https://cdn.jsdelivr.net/gh/ycshang123/image-hosting@master/my.59jo4cq7ops0.jpg"></p><h4 id="生成并发布-archetype"><a href="#生成并发布-archetype" class="headerlink" title="生成并发布 archetype"></a>生成并发布 archetype</h4><h4 id="进入模板目录"><a href="#进入模板目录" class="headerlink" title="进入模板目录"></a>进入模板目录</h4>  <img src="https://raw.githubusercontent.com/ycshang123/image-hosting/master/1.57ql2knd99w0.jpg" width="600px"><h4 id="安装到本地仓库"><a href="#安装到本地仓库" class="headerlink" title="安装到本地仓库"></a>安装到本地仓库</h4>  <img src="https://raw.githubusercontent.com/ycshang123/image-hosting/master/2.1fckur5gxem8.jpg" width="600px"><h4 id="在本地仓库生成-archetype-文件"><a href="#在本地仓库生成-archetype-文件" class="headerlink" title="在本地仓库生成 archetype 文件"></a>在本地仓库生成 archetype 文件</h4>  <img src="https://raw.githubusercontent.com/ycshang123/image-hosting/master/3.3yawg26kkgm0.jpg" width="600px"><h5 id="经过如上的操作会生成一个-archetype-catalog-xml-的配置文件"><a href="#经过如上的操作会生成一个-archetype-catalog-xml-的配置文件" class="headerlink" title="经过如上的操作会生成一个 archetype-catalog.xml 的配置文件"></a>经过如上的操作会生成一个 archetype-catalog.xml 的配置文件</h5><h4 id="发布到私库"><a href="#发布到私库" class="headerlink" title="发布到私库"></a>发布到私库</h4>  <img src="https://raw.githubusercontent.com/ycshang123/image-hosting/master/4.7fh0abttxbk0.jpg" width="600px"><p>注意：发布到远程仓库时，有可能因为我们的 pom 文件中没有配置发布仓库的信息，导致错误<br><strong>解决方法： cd target/generated-sources/archetype 切换到这个目录，然后在当前目录下的 pom.xml 文件中，增加以下私服仓库配置</strong><br><img src="https://raw.githubusercontent.com/ycshang123/image-hosting/master/5.5bck2wxndo00.jpg" width="600px"></p><h4 id="使用模板"><a href="#使用模板" class="headerlink" title="使用模板"></a>使用模板</h4><ul><li>在需要创建项目的地方启动终端，执行下面的命令（local 表示从本地读取骨架项目模版，如果从网络读取 maven 提供的模版，会非常多、不好选）：</li></ul><img src="https://raw.githubusercontent.com/ycshang123/image-hosting/master/6.4gk5cguqniq0.jpg" width="600px">]]></content>
+      
+      
+      <categories>
+          
+          <category> maven </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> archetype </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>GateWay常用的Predicate</title>
+      <link href="/2021/09/20/gateway-chang-yong-de-predicate/"/>
+      <url>/2021/09/20/gateway-chang-yong-de-predicate/</url>
+      
+        <content type="html"><![CDATA[<h1 id="GateWay-常用的-Predicate"><a href="#GateWay-常用的-Predicate" class="headerlink" title="GateWay 常用的 Predicate"></a>GateWay 常用的 Predicate</h1><h3 id="什么是-Predicate-断言"><a href="#什么是-Predicate-断言" class="headerlink" title="什么是 Predicate(断言)?"></a>什么是 Predicate(断言)?</h3><p>Predicate 是一种路由规则，用于进行条件判断；通过 Gateway 中丰富的内置断言组合，可以使一个请求找到对应的 Route 来处理，只有当断言都返回真，才会真正的执行路由。</p><h3 id="Predicate-断言-的作用是什么？"><a href="#Predicate-断言-的作用是什么？" class="headerlink" title="Predicate(断言)的作用是什么？"></a>Predicate(断言)的作用是什么？</h3><p>断言是过滤匹配请求的第一步，当一个请求抵达网关后，首先就要进行断言匹配，在满足所有的断言条件之后才会进入 Filter 阶段；其主要作用是为每一个请求精准匹配路由。</p><h3 id="常见的内置断言工厂有哪些？"><a href="#常见的内置断言工厂有哪些？" class="headerlink" title="常见的内置断言工厂有哪些？"></a>常见的内置断言工厂有哪些？</h3><p>SpringCloud Gateway 包括许多内置的断言工厂，所有这些断言都与 HTTP 请求的不同属性匹配。</p><ul><li><p>基于 Datetime 类型的断言工厂</p></li><li><ul><li>AfterRoutePredicateFactory： 接收一个日期参数，判断请求日期是否晚于指定日期</li><li>BeforeRoutePredicateFactory： 接收一个日期参数，判断请求日期是否早于指定日期</li></ul></li><li><ul><li>BetweenRoutePredicateFactory： 接收两个日期参数，判断请求日期是否在指定时间段内</li></ul></li><li><p>基于远程地址的断言工厂</p></li><li><ul><li>RemoteAddrRoutePredicateFactory： 接收一个 IP 地址段，判断请求主机地址是否在地址段中</li></ul></li><li><p>基于 Cookie 的断言工厂</p></li><li><ul><li>CookieRoutePredicateFactory：接收两个参数，cookie 名字和一个正则表达式。 判断请求 cookie 是否具有给定名称且值与正则表达式匹配。</li></ul></li><li><p>基于 Header 的断言工厂</p></li><li><ul><li>HeaderRoutePredicateFactory：接收两个参数，标题名称和正则表达式。 判断请求 Header 是否具有给定名称且值与正则表达式匹配。</li></ul></li><li><p>基于 Host 的断言工厂</p></li><li><ul><li>HostRoutePredicateFactory：接收一个参数，主机名模式。判断请求的 Host 是否满足匹配规则。</li></ul></li><li><p>基于 Method 请求方法的断言工厂</p></li><li><ul><li>MethodRoutePredicateFactory：接收一个参数，判断请求类型是否跟指定的类型匹配。</li></ul></li><li><p>基于 Path 请求路径的断言工厂</p></li><li><ul><li>PathRoutePredicateFactory：接收一个参数，判断请求的 URI 部分是否满足路径规则。</li></ul></li><li><p>基于 Query 请求参数的断言工厂</p></li><li><ul><li>QueryRoutePredicateFactory ：接收两个参数，请求 param 和正则表达式， 判断请求参数是否具有给定名称且值与正则表达式匹配。</li></ul></li><li><p>基于路由权重的断言工厂</p></li><li><ul><li>WeightRoutePredicateFactory：接收一个 <strong>[组名,权重]</strong> 然后对于<strong>同一个组</strong>内的路由按照权重转发</li></ul></li></ul><h3 id="常见的断言有哪些，如何使用这些断言？"><a href="#常见的断言有哪些，如何使用这些断言？" class="headerlink" title="常见的断言有哪些，如何使用这些断言？"></a>常见的断言有哪些，如何使用这些断言？</h3><ul><li><p><strong>Path</strong></p></li><li><ul><li>当且仅当请求时所访问的路径与配置的路径相匹配时，才转发该请求</li></ul></li></ul><p><img  src="https://cdn.jsdelivr.net/gh/ycshang123/image-hosting@master/1.5jwbt1xwi6o.jpg"  ><span class="image-caption">img</span></p><ul><li><ul><li>实现效果：当且仅当访问路径是/users/*或者/some-path/**，才会转发用户微服务，否则转发失败，返回 404</li></ul></li><li><p><strong>After</strong></p></li><li><ul><li>当且仅当请求时的时间 After 配置的时间时，才转发该请求</li></ul></li></ul><p><img  src="https://cdn.jsdelivr.net/gh/ycshang123/image-hosting@master/2.12alzbupiwwg.jpg"  ><span class="image-caption">img</span></p><ul><li><ul><li>实现效果：当且仅当请求时的时间 After 配置的时间时，才会转发到用户微服务，否则转发失败，返回 404</li></ul></li><li><p><strong>Before</strong></p></li><li><ul><li>当且仅当请求时的时间 Before 配置的时间时，才转发该请求</li></ul></li></ul><p><img  src="https://cdn.jsdelivr.net/gh/ycshang123/image-hosting@master/3.3tq2m0cf3j80.jpg"  ><span class="image-caption">img</span></p><ul><li><ul><li>实现效果：当且仅当请求时的时间 Before 配置的时间时，才会转发到用户微服务，否则转发失败，返回 404</li></ul></li><li><p><strong>Between</strong></p></li><li><ul><li>当且仅当请求时的时间 Between 配置的时间段时，才转发该请求</li></ul></li></ul><p><img  src="https://cdn.jsdelivr.net/gh/ycshang123/image-hosting@master/4.2m3h19yh9xe0.jpg"  ><span class="image-caption">img</span></p><ul><li><ul><li>实现效果：当且仅当请求时的时间 Between 配置的时间时，才会转发到用户微服务，否则转发失败，返回 404</li></ul></li><li><p><strong>Cookie</strong></p></li><li><ul><li>当且仅当请求时携带的 Cookie 名称及值与配置的名称及值相符时，才转发该请求</li></ul></li></ul><p><img  src="https://cdn.jsdelivr.net/gh/ycshang123/image-hosting@master/5.5rohic91fwo0.jpg"  ><span class="image-caption">img</span></p><ul><li><ul><li>实现效果：当且仅当带有名为 somecookie，并且值符合正则 ch.p 的 Cookie 时，才会转发到用户微服务，否则转发失败，返回 404</li></ul></li><li><p><strong>Header</strong></p></li><li><ul><li>当且仅当请求时携带的 Header 名称及值与配置的名称及值相符时，才转发该请求</li></ul></li></ul><p><img  src="https://cdn.jsdelivr.net/gh/ycshang123/image-hosting@master/h.5qnd5m5srfo0.jpg"  ><span class="image-caption">img</span></p><ul><li><ul><li>实现效果：当且仅当带有名为 X-Request-Id，并且值符合正则\d+的 Header 时，才会转发到用户微服务，否则转发失败，返回 404</li></ul></li><li><p><strong>Host</strong></p></li><li><ul><li>当且仅当请求时名为 Host 的 Header 的值与配置的值相符时，才转发该请求</li></ul></li></ul><p><img  src="https://cdn.jsdelivr.net/gh/ycshang123/image-hosting@master/ho.3f4ypckbqku0.jpg"  ><span class="image-caption">img</span></p><ul><li><ul><li>实现效果：当且仅当名为 Host 的 Header 符合**.somehost.org 或**.anotherhost.org 时，才会转发用户微服务，否则转发失败，返回 404</li></ul></li><li><p><strong>Method</strong></p></li><li><ul><li>当且仅当请求时所使用的 HTTP 方法与配置的请求方法相符时，才转发该请求</li></ul></li></ul><p><img  src="https://cdn.jsdelivr.net/gh/ycshang123/image-hosting@master/me.7cbkscvwvro0.jpg"  ><span class="image-caption">img</span></p><ul><li><ul><li>实现效果：当且仅当 HTTP 请求方法是 GET 时，才会转发用户微服务</li></ul></li><li><p><strong>Query</strong></p></li><li><ul><li>当且仅当请求时所带有的参数名称与配置的参数名称相符时，才转发该请求</li></ul></li></ul><p><img  src="https://cdn.jsdelivr.net/gh/ycshang123/image-hosting@master/030.74jqql4iwl40.jpg"  ><span class="image-caption">img</span></p><ul><li><ul><li>实现效果： 当且仅当请求带有 baz 的参数，才会转发到用户微服务</li></ul></li></ul><p><img  src="https://cdn.jsdelivr.net/gh/ycshang123/image-hosting@master/031.6qsridxruh80.jpg"  ><span class="image-caption">img</span></p><ul><li><ul><li>实现效果：当且仅当请求带有名为 foo 的参数，且参数值符合正则 ba.，才会转发到用户微服务</li></ul></li><li><p><strong>RemoteAddr</strong></p></li><li><ul><li>当且仅当请求时的 IP 地址与配置的 IP 地址相符时，才转发该请求</li></ul></li></ul><p><img  src="https://cdn.jsdelivr.net/gh/ycshang123/image-hosting@master/01.3vbo9h8spyg0.jpg"  ><span class="image-caption">img</span></p><ul><li><ul><li>实现效果：当且仅当请求 IP 是 192.168.1.1/24 网段，例如 192.168.1.10，才会转发到用户微服务</li></ul></li></ul><h3 id="如何自定义断言？"><a href="#如何自定义断言？" class="headerlink" title="如何自定义断言？"></a>如何自定义断言？</h3><ol><li><p>定义配置类</p></li><li><ol><li><img  src="https://cdn.jsdelivr.net/gh/ycshang123/image-hosting@master/p1.3af437yote00.jpg"  ><span class="image-caption">img</span></li></ol></li><li><p>定义断言工厂</p></li><li><ol><li><img  src="https://cdn.jsdelivr.net/gh/ycshang123/image-hosting@master/d.5u4exhm7q5s0.jpg"  ><span class="image-caption">img</span></li></ol></li><li><p>配置类</p></li><li><ol><li><img  src="https://cdn.jsdelivr.net/gh/ycshang123/image-hosting@master/p.6y86xdotal00.jpg"  ><span class="image-caption">img</span></li></ol></li><li><p>实现效果</p></li><li><ol><li>该接口只能在上午 11：30 和下午 5：00 这个时间内访问，其他时间段访问都是 404</li></ol></li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> 微服务 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> gateway </tag>
+            
+            <tag> predicate </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
+</search>

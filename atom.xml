@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>盏茶浅抿</title>
+  
+  <subtitle>ycshang的博客</subtitle>
+  <link href="http://example.com/atom.xml" rel="self"/>
+  
+  <link href="http://example.com/"/>
+  <updated>2021-09-20T14:14:11.179Z</updated>
+  <id>http://example.com/</id>
+  
+  <author>
+    <name>ycshang123</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>数据结构基本整理</title>
+    <link href="http://example.com/2021/09/20/shu-ju-jie-gou/"/>
+    <id>http://example.com/2021/09/20/shu-ju-jie-gou/</id>
+    <published>2021-09-20T13:08:12.091Z</published>
+    <updated>2021-09-20T14:14:11.179Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;ul&gt;
+&lt;li&gt;什么是数据结构：&lt;ul&gt;
+&lt;li&gt;数据结构就是把数据元素按照一定的关系组织起来的集合，用来组织和存储数据&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;数据结构的分类&lt;ul&gt;
+&lt;li&gt;逻辑结构和物理结构&lt;ul&gt;
+&lt;li&gt;逻辑结构：从具体的问题中抽象出来的模型，是抽象</summary>
+        
+      
+    
+    
+    <content src="https://wx2.sinaimg.cn/mw690/00669kengy1gumd86b16ij60fh0fh76f02.jpg" type="image"/>
+    
+    
+    <category term="数据结构" scheme="http://example.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    
+    
+    <category term="存储结构" scheme="http://example.com/tags/%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84/"/>
+    
+    <category term="算法" scheme="http://example.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>索引的基本使用</title>
+    <link href="http://example.com/2021/09/20/suo-yin-pian/"/>
+    <id>http://example.com/2021/09/20/suo-yin-pian/</id>
+    <published>2021-09-20T13:08:08.467Z</published>
+    <updated>2021-09-20T14:14:30.767Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;索引的基本分类&quot;&gt;&lt;a href=&quot;#索引的基本分类&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    <content src="https://wx2.sinaimg.cn/mw690/00669kengy1gumd7x0571j60ez0ey0vs02.jpg" type="image"/>
+    
+    
+    <category term="sql" scheme="http://example.com/categories/sql/"/>
+    
+    
+    <category term="索引" scheme="http://example.com/tags/%E7%B4%A2%E5%BC%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>自定义archetype步骤</title>
+    <link href="http://example.com/2021/09/20/zi-ding-yi-archetype-bu-zou/"/>
+    <id>http://example.com/2021/09/20/zi-ding-yi-archetype-bu-zou/</id>
+    <published>2021-09-20T13:00:23.175Z</published>
+    <updated>2021-09-20T15:19:07.132Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;自定义-archetype-步骤&quot;&gt;&lt;a href=&quot;#自定义-archetype-步骤&quot; class=&quot;headerlink&quot; title=&quot;自定义 archetype 步骤&quot;&gt;&lt;/a&gt;自定义 archetype 步骤&lt;/h1&gt;&lt;h4</summary>
+        
+      
+    
+    
+    <content src="https://wx3.sinaimg.cn/mw690/00669kengy1gumd7vrcroj60dl0dlabw02.jpg" type="image"/>
+    
+    
+    <category term="maven" scheme="http://example.com/categories/maven/"/>
+    
+    
+    <category term="archetype" scheme="http://example.com/tags/archetype/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>GateWay常用的Predicate</title>
+    <link href="http://example.com/2021/09/20/gateway-chang-yong-de-predicate/"/>
+    <id>http://example.com/2021/09/20/gateway-chang-yong-de-predicate/</id>
+    <published>2021-09-20T12:50:35.876Z</published>
+    <updated>2021-09-20T14:15:21.769Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;GateWay-常用的-Predicate&quot;&gt;&lt;a href=&quot;#GateWay-常用的-Predicate&quot; class=&quot;headerlink&quot; title=&quot;GateWay 常用的 Predicate&quot;&gt;&lt;/a&gt;GateWay 常用的</summary>
+        
+      
+    
+    
+    <content src="https://wx3.sinaimg.cn/mw690/00669kengy1gumd7uvvlxj60o70o7gxi02.jpg" type="image"/>
+    
+    
+    <category term="微服务" scheme="http://example.com/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+    
+    
+    <category term="gateway" scheme="http://example.com/tags/gateway/"/>
+    
+    <category term="predicate" scheme="http://example.com/tags/predicate/"/>
+    
+  </entry>
+  
+</feed>
