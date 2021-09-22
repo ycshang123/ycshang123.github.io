@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>计算机组成与体系结构</title>
+      <link href="/2021/09/22/ji-suan-ji-zu-cheng-yu-ti-xi-jie-gou/"/>
+      <url>/2021/09/22/ji-suan-ji-zu-cheng-yu-ti-xi-jie-gou/</url>
+      
+        <content type="html"><![CDATA[<h1 id="计算机组成与体系结构"><a href="#计算机组成与体系结构" class="headerlink" title="计算机组成与体系结构"></a>计算机组成与体系结构</h1><h2 id="数据的表示"><a href="#数据的表示" class="headerlink" title="数据的表示"></a>数据的表示</h2><ul><li><p>进制转换</p><ul><li><p>R 进制转十进制使用按权展开法【将 R 进制数的每一位数值用 R 的 k 次方形式表示，底数为 R，k 的数值与数值距离小数点的位置有关，小数点左侧由 0 开始，向左递增；小数点右侧从-1 开始递减】</p><p><img  src="https://cdn.jsdelivr.net/gh/ycshang123/image-hosting@master/1.rmztazc119c.jpg"  ><span class="image-caption">十进制转换</span></p></li><li><p>十进制转 R 进制使用短除法【即转为几进制就除以几，结果取余，从下往上取结果】</p><p><img  src="https://cdn.jsdelivr.net/gh/ycshang123/image-hosting@master/2.5yhgqei83mo0.jpg"  ><span class="image-caption">十进制转为R进制</span></p></li><li><p>二进制转八进制【二进制的每三位对应八进制中的一位数】</p></li><li><p>二进制转十六进制【二进制的每四位数对应十六进制中的一位数】</p></li></ul></li></ul><p><img  src="https://cdn.jsdelivr.net/gh/ycshang123/image-hosting@master/3.7f8mzj9e8yg0.jpg"  ><span class="image-caption">二进制转换</span></p><h2 id="原码、反码、补码、移码的表示"><a href="#原码、反码、补码、移码的表示" class="headerlink" title="原码、反码、补码、移码的表示"></a>原码、反码、补码、移码的表示</h2><ul><li><p>原码：将数值转为二进制的表达形式，数值转为不足八位数的不足八位，左侧第一位为符号位，1 为负数 0 为正数【不能直接做运算】</p></li><li><p>反码：正数的反码为原码本身，负数的反码，符号位不变，其他位置取反</p></li><li><p>补码：正数的补码为原码本身，负数的补码，在反码的基础上加 1【可以进行数值计算】</p></li><li><p>移码：在补码的基础上，首位取反</p><p><img  src="https://cdn.jsdelivr.net/gh/ycshang123/image-hosting@master/4.1hgld68epjhc.jpg"  ><span class="image-caption">以1为例子</span></p></li><li><p>表示范围：</p><p><img  src="https://cdn.jsdelivr.net/gh/ycshang123/image-hosting@master/5.3tnig61e4h20.jpg"  ><span class="image-caption">表示范围</span></p></li></ul><h2 id="浮点数运算"><a href="#浮点数运算" class="headerlink" title="浮点数运算"></a>浮点数运算</h2><p><img  src="https://cdn.jsdelivr.net/gh/ycshang123/image-hosting@master/6.265tl7hk4xcw.jpg"  ><span class="image-caption">浮点数运算</span></p><h2 id="计算机体系结构分类——Flynn"><a href="#计算机体系结构分类——Flynn" class="headerlink" title="计算机体系结构分类——Flynn"></a>计算机体系结构分类——Flynn</h2><table><thead><tr><th>体系结构类型</th><th>结构</th><th>关键特性</th><th>代表</th></tr></thead><tbody><tr><td>单指令流单数据流 SISD</td><td>控制部分：一个<br />处理器：一个<br />主存模块：一个</td><td></td><td>单处理器系统</td></tr><tr><td>单指令流多数据流 SIMD</td><td>控制部分：一个<br />处理器：多个<br />主存模块：多个</td><td>各处理器以异步的形式执行同一条指令</td><td>并行处理机<br />阵列处理机<br />超级向量处理机</td></tr><tr><td>多指令流单数据流 MISD</td><td>控制部分：多个<br />处理器：一个<br />主存模块：多个</td><td>被证明不可能，至少是不实际</td><td>目前没有，有文献称流水线计算机为此类</td></tr><tr><td>多指令流多数据流 MIMD</td><td>控制部分：多个<br />处理器：多个<br />主存模块：多个</td><td>能够实现作业、任务、指令等各级全面并行</td><td>多处理机系统<br />多计算机</td></tr></tbody></table><h2 id="CISC-与-RISC"><a href="#CISC-与-RISC" class="headerlink" title="CISC 与 RISC"></a>CISC 与 RISC</h2><table><thead><tr><th>指令系统类型</th><th>指令</th><th>寻址方式</th><th>实现方式</th><th>其他</th></tr></thead><tbody><tr><td>CISC</td><td>数量多，使用频率差别大，<br />可变长格式</td><td>支持多种</td><td>微程序控制技术(微码)</td><td>研制周期长</td></tr><tr><td>RISC</td><td>数量少，使用频率接近，定长格式，<br />大部分为单周期指令，操作寄存器，只有 Load/Store 操作内存</td><td>支持方式少</td><td>增加了通用寄存器，硬布线逻辑控制为主；适合采用流水线</td><td>优化编译，有效支持高级语言</td></tr></tbody></table>]]></content>
+      
+      
+      <categories>
+          
+          <category> 软考知识集锦 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 计算机的组成 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>GateWay常用的Predicate</title>
       <link href="/2021/09/20/gateway-chang-yong-de-predicate/"/>
       <url>/2021/09/20/gateway-chang-yong-de-predicate/</url>

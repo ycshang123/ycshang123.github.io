@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-09-20T15:49:47.830Z</updated>
+  <updated>2021-09-22T00:18:04.513Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>计算机组成与体系结构</title>
+    <link href="http://example.com/2021/09/22/ji-suan-ji-zu-cheng-yu-ti-xi-jie-gou/"/>
+    <id>http://example.com/2021/09/22/ji-suan-ji-zu-cheng-yu-ti-xi-jie-gou/</id>
+    <published>2021-09-21T16:58:46.692Z</published>
+    <updated>2021-09-22T00:18:04.513Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;计算机组成与体系结构&quot;&gt;&lt;a href=&quot;#计算机组成与体系结构&quot; class=&quot;headerlink&quot; title=&quot;计算机组成与体系结构&quot;&gt;&lt;/a&gt;计算机组成与体系结构&lt;/h1&gt;&lt;h2 id=&quot;数据的表示&quot;&gt;&lt;a href=&quot;#数据的表示&quot;</summary>
+        
+      
+    
+    
+    <content src="https://cdn.jsdelivr.net/gh/ycshang123/image-hosting@master/7.309m5bf9shq0.jpg" type="image"/>
+    
+    
+    <category term="软考知识集锦" scheme="http://example.com/categories/%E8%BD%AF%E8%80%83%E7%9F%A5%E8%AF%86%E9%9B%86%E9%94%A6/"/>
+    
+    
+    <category term="计算机的组成" scheme="http://example.com/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%9A%84%E7%BB%84%E6%88%90/"/>
+    
+  </entry>
   
   <entry>
     <title>GateWay常用的Predicate</title>
