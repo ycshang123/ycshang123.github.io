@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Java快速入门和运行机制</title>
+      <link href="/2021/09/23/java-kuai-su-ru-men-he-yun-xing-ji-zhi/"/>
+      <url>/2021/09/23/java-kuai-su-ru-men-he-yun-xing-ji-zhi/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Java-快速入门和运行机制"><a href="#Java-快速入门和运行机制" class="headerlink" title="Java 快速入门和运行机制"></a>Java 快速入门和运行机制</h1><h2 id="Java-开发快速入门"><a href="#Java-开发快速入门" class="headerlink" title="Java 开发快速入门"></a>Java 开发快速入门</h2><h3 id="Java-文件运行编译"><a href="#Java-文件运行编译" class="headerlink" title="Java 文件运行编译"></a>Java 文件运行编译</h3><ol><li>有了 Java 源文件，通过编译器将其编译成 JVM 可以识别的字节码文件</li><li>再源文件目录下，通过 javac 编译工具对.java 文件进行编译</li><li>编译成功在项目的根目录下会出现.class 文件，该文件为字节码文件，也是可以执行的 java 程序</li></ol><h3 id="Java-文件的运行"><a href="#Java-文件的运行" class="headerlink" title="Java 文件的运行"></a>Java 文件的运行</h3><ol><li>运行的本质是将.class 装载到 jvm 机执行</li></ol><p>【注意：对修改后的源文件需要重新编译，生成新的 class 文件后，再进行执行，才能生效】</p><h2 id="Java-开发注意事项和细节说明"><a href="#Java-开发注意事项和细节说明" class="headerlink" title="Java 开发注意事项和细节说明"></a>Java 开发注意事项和细节说明</h2><ol><li>Java 严格区分大小写</li><li>每个语句必须以;结束</li><li>源文件中包包含的一个 public 类。其它类的个数不限，也可以将 main 方法写在非 public 类中，指定运行非</li></ol><p>puclic 类，入口方法就是非 public 的 main 方法</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 重温Java </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>计算机组成与体系结构</title>
       <link href="/2021/09/22/ji-suan-ji-zu-cheng-yu-ti-xi-jie-gou/"/>
       <url>/2021/09/22/ji-suan-ji-zu-cheng-yu-ti-xi-jie-gou/</url>
