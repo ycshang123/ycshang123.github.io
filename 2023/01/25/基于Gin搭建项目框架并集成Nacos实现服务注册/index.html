@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="ycshang">
+    
+    <title>
+        
+            基于Gin搭建项目框架并集成Nacos实现服务注册 |
+        
+        ycshang的博客
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="https://cdn.staticaly.com/gh/ycshang123/image-hosting@master/logo.5xipgudohy00.webp">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.6.1/source/font/css/fontawesome.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.6.1/source/font/css/regular.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.6.1/source/font/css/solid.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.6.1/source/font/css/brands.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"en","path":"search.json"}
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":false,"init_open":true},"style":{"primary_color":"#424242","logo":"https://cdn.staticaly.com/gh/ycshang123/image-hosting@master/logo.5xipgudohy00.webp","favicon":"https://cdn.staticaly.com/gh/ycshang123/image-hosting@master/logo.5xipgudohy00.webp","avatar":"https://cdn.staticaly.com/gh/ycshang123/image-hosting@master/avatar.4nd84incufw0.webp","font_size":null,"font_family":null,"hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"header_transparent":true,"background_img":"/images/bg.svg","description":"视代码如诗词||勿要做无所谓的堆砌","font_color":null,"hitokoto":true},"scroll":{"progress_bar":true,"percent":true}},"local_search":{"enable":true,"preload":true},"code_copy":{},"code_block":{"tools":{"enable":true,"style":"mac"},"highlight_theme":"default"},"side_tools":{},"pjax":{"enable":true},"lazyload":{"enable":true},"comment":{"enable":true,"use":"gitalk","valine":{"appid":null,"appkey":null,"server_urls":null,"placeholder":null},"gitalk":{"github_id":"ycshang123","github_admins":null,"repository":"ycshang-talk-comments","client_id":"bf86f2a0722d8fa6a221","client_secret":"b7e512764db8cd8cf5b3bed693958563312e06df","proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.8"},"waline":{"server_url":null,"reaction":false,"version":2}},"post":{"author_label":{"enable":true,"auto":true,"custom_label_list":["全栈学习生"]},"word_count":{"enable":true,"wordcount":true,"min2read":true},"img_align":"center","copyright_info":true},"version":"3.6.1"}
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"}
+    KEEP.language_code_block = {"copy":"Copy code","copied":"Copied","fold":"Fold code block","folded":"Folded"}
+    KEEP.language_copy_copyright = {"copy":"Copy copyright info","copied":"Copied","title":"Original article title","author":"Original article author","link":"Original article link"}
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <i class="pjax-progress-icon fas fa-circle-notch fa-spin"></i>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="https://cdn.staticaly.com/gh/ycshang123/image-hosting@master/logo.5xipgudohy00.webp">
+                </a>
+            
+            <a class="logo-title" href="/">
+               ycshang的博客
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/category"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/links"
+                            >
+                                LINKS
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/category">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/links">LINKS</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container">
+        <div class="article-content-container">
+
+            <div class="article-title">
+                <span class="title-hover-animation">基于Gin搭建项目框架并集成Nacos实现服务注册</span>
+            </div>
+
+            
+                <div class="article-header">
+                    <div class="avatar">
+                        <img src="https://cdn.staticaly.com/gh/ycshang123/image-hosting@master/avatar.4nd84incufw0.webp">
+                    </div>
+                    <div class="info">
+                        <div class="author">
+                            <span class="name">ycshang</span>
+                            
+                                <span class="author-label">Lv1</span>
+                            
+                        </div>
+                        <div class="meta-info">
+                            
+<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        
+            <i class="fa-regular fa-calendar-plus"></i>&nbsp;
+        
+        <span class="pc">2023-01-25 21:55:14</span>
+        <span class="mobile">2023-01-25 21:55</span>
+    </span>
+    
+        <span class="article-update-date article-meta-item">
+        <i class="fas fa-file-pen"></i>&nbsp;
+        <span class="pc">2023-01-26 13:28:36</span>
+    </span>
+    
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Go/">Go</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>1k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>4 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                        </div>
+                    </div>
+                </div>
+            
+
+            <div class="article-content keep-markdown-body">
+                
+
+                <h1 id="一、Windows-如何搭建-Go-环境"><a href="#一、Windows-如何搭建-Go-环境" class="headerlink" title="一、Windows 如何搭建 Go 环境"></a>一、Windows 如何搭建 Go 环境</h1><h2 id="1、下载-Go-语言开发包"><a href="#1、下载-Go-语言开发包" class="headerlink" title="1、下载 Go 语言开发包"></a>1、下载 Go 语言开发包</h2><p>可以到 Go 语言开发<a class="link"   target="_blank" rel="noopener" href="https://golang.google.cn/dl/" >官网<i class="fas fa-external-link-alt"></i></a>下载 Windows 系统下的Go语言开发包，如下图所示：<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="http://tva1.sinaimg.cn/large/006eXSq0gy1hagy71svkdj30p00axwid.jpg"
+                      alt="image.png"
+                ></p>
+<h2 id="2、安装-Go-语言开发包"><a href="#2、安装-Go-语言开发包" class="headerlink" title="2、安装 Go 语言开发包"></a>2、安装 Go 语言开发包</h2><p>双击下载好的 Go 语言开发包即可启动安装程序，如下图所示，直接勾选“I accept …”然后点击“Next”即可<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="http://tva1.sinaimg.cn/large/006eXSq0gy1hagy7pwtrrg30dp0a0q31.gif"
+                     
+                ><br>在 Windows 系统下 Go 语言开发包会默认安装到 C 盘的 Go 目录下，推荐在这个目录下安装，使用起来较为方便。当然，也可以选择其他的安装目录，确认无误后点击“Next”，如下图所示：<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="http://tva1.sinaimg.cn/large/006eXSq0gy1hagy90cdamg30dr0ar748.gif"
+                     
+                ><br>Go语言开发包的安装没有其他需要设置的选项，点击“Install”即可开始安装<br>安装完成后，在我们所设置的安装目录下将生成一些目录和文件，如下图所示：<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="http://tva1.sinaimg.cn/large/006eXSq0gy1hagy9w5r2vj31dk0yggyo.jpg"
+                      alt="image.png"
+                ></p>
+<h2 id="3、设置环境变量"><a href="#3、设置环境变量" class="headerlink" title="3、设置环境变量"></a>3、设置环境变量</h2><p>开发包安装完成后，还需要配置一下GOPATH 环境变量，之后才可以使用Go语言进行开发。GOPATH 是一个路径，用来存放开发中需要用到的代码包<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="http://tva1.sinaimg.cn/large/006eXSq0gy1hagyagmaaqj30o00m1qcc.jpg"
+                      alt="image.png"
+                ><br>在弹出的菜单里找到 GOPATH 对应的选项点击编辑之后就可以修改了，没有的话可以选择新建，并将变量名填写为 GOPATH，变量值设置为任意目录均可（尽量选择空目录），例如 D:\Go</p>
+<h2 id="4、下载开发工具并设置环境变量"><a href="#4、下载开发工具并设置环境变量" class="headerlink" title="4、下载开发工具并设置环境变量"></a>4、下载开发工具并设置环境变量</h2><p>Go 项目开发需要使用 GoLand 开发工具进行开发，需要从<a class="link"   target="_blank" rel="noopener" href="https://www.jetbrains.com/go/download/other.html" >官网<i class="fas fa-external-link-alt"></i></a>上下载对应的安装包，并配置对应的 GOROOT地址【选择自己安装的 Go 语言开发包的位置】<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="http://tva1.sinaimg.cn/large/006eXSq0gy1hagybcpttjj314w0tn456.jpg"
+                      alt="image.png"
+                ><br>配置GOPATH<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="http://tva1.sinaimg.cn/large/006eXSq0gy1hagybyhwdlj314w0tntfu.jpg"
+                      alt="image.png"
+                ></p>
+<h1 id="二、Golang-的项目框架是什么样子的？"><a href="#二、Golang-的项目框架是什么样子的？" class="headerlink" title="二、Golang 的项目框架是什么样子的？"></a>二、Golang 的项目框架是什么样子的？</h1><p>目前构建 Go 项目普遍参考的项目结构: <a class="link"   target="_blank" rel="noopener" href="https://github.com/golang-standards/project-layout" >golang-standards<i class="fas fa-external-link-alt"></i></a> 其中构建的项目结构是 Go 应用程序项目的基础布局，包含中文README文件阅读</p>
+<ol>
+<li>&#x2F;internal<ol>
+<li>私有的应用程序代码库：这些是不希望被其他人导入的代码，在项目的目录树中的任意位置都可以有internal目录，而不仅仅是在顶级目录中</li>
+</ol>
+</li>
+<li>&#x2F;pkg<ol>
+<li>外部应用程序可以使用的库代码：比如项目中公用封装的工具类等</li>
+</ol>
+</li>
+<li>&#x2F;vendor<ol>
+<li>包含所有依赖的三方的源代码</li>
+</ol>
+</li>
+</ol>
+<h1 id="三、什么是Gin-应该如何使用？"><a href="#三、什么是Gin-应该如何使用？" class="headerlink" title="三、什么是Gin,应该如何使用？"></a>三、什么是Gin,应该如何使用？</h1><p><a class="link"   target="_blank" rel="noopener" href="https://learnku.com/docs/gin-gonic/1.7/introduction/11353" >Gin<i class="fas fa-external-link-alt"></i></a> 是一个用 Go (Golang) 编写的 HTTP web 框架，可以传入一些Http请求<br>下载并安装Gin：</p>
+<ol>
+<li>go get -u github.com&#x2F;gin-gonic&#x2F;gin</li>
+<li>import “github.com&#x2F;gin-gonic&#x2F;gin”</li>
+<li>import “net&#x2F;http”[可选，会提供一些http响应的状态常量]</li>
+</ol>
+<p>使用基本例子：<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="http://tva1.sinaimg.cn/large/006eXSq0gy1hagychv5w1j30ra0kfn2z.jpg"
+                      alt="image.png"
+                ></p>
+<h1 id="四、如何集成Nacos集成服务注册与配置文件的动态读取"><a href="#四、如何集成Nacos集成服务注册与配置文件的动态读取" class="headerlink" title="四、如何集成Nacos集成服务注册与配置文件的动态读取"></a>四、如何集成Nacos集成服务注册与配置文件的动态读取</h1><p><a class="link"   target="_blank" rel="noopener" href="https://github.com/nacos-group/nacos-sdk-go" >Nacos-sdk-go<i class="fas fa-external-link-alt"></i></a>是Nacos的Go语言客户端，它实现了服务发现和动态配置的功能<br>配置过程：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> (</span><br><span class="line">    Db             *gorm.DB</span><br><span class="line">    LOG            *zap.SugaredLogger</span><br><span class="line">    CONFIG         conf.Config</span><br><span class="line">    WechatOfficial *officialaccount.OfficialAccount</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 加载配置，失败直接panic</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">LoadConfig</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="comment">//服务注册端口和地址</span></span><br><span class="line">    serverConfigs := []constant.ServerConfig&#123;</span><br><span class="line">        &#123;</span><br><span class="line">            IpAddr: <span class="string">&quot;Nacos注册地址&quot;</span>,</span><br><span class="line">            Port:   <span class="number">8848</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 客户端配置</span></span><br><span class="line">    clientConfig := constant.ClientConfig&#123;</span><br><span class="line">        <span class="comment">//http请求超时时间，单位毫秒</span></span><br><span class="line">        TimeoutMs:           <span class="number">5000</span>,</span><br><span class="line">        NotLoadCacheAtStart: <span class="literal">true</span>,</span><br><span class="line">        NamespaceId:         <span class="string">&quot;注册的命名空间&quot;</span>,</span><br><span class="line">        ListenInterval:      <span class="number">10000</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//创建动态配置客户端</span></span><br><span class="line">    configClient, err := clients.NewConfigClient(</span><br><span class="line">        vo.NacosClientParam&#123;</span><br><span class="line">            ClientConfig:  &amp;clientConfig,</span><br><span class="line">            ServerConfigs: serverConfigs,</span><br><span class="line">        &#125;,</span><br><span class="line">    )</span><br><span class="line">    <span class="comment">// 创建服务发现客户端的另一种方式 (推荐)</span></span><br><span class="line">    client, err := clients.NewNamingClient(</span><br><span class="line">        vo.NacosClientParam&#123;</span><br><span class="line">            ClientConfig:  &amp;clientConfig,</span><br><span class="line">            ServerConfigs: serverConfigs,</span><br><span class="line">        &#125;,</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="built_in">panic</span>(err)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//服务注册</span></span><br><span class="line">    success, err := client.RegisterInstance(vo.RegisterInstanceParam&#123;</span><br><span class="line">        Ip:          utils.LocalIP(),</span><br><span class="line">        Port:        <span class="string">&#x27;项目端口号&#x27;</span>,</span><br><span class="line">        ServiceName: <span class="string">&quot;项目注册的服务名&quot;</span>,</span><br><span class="line">        Weight:      <span class="number">10</span>,</span><br><span class="line">        Enable:      <span class="literal">true</span>,</span><br><span class="line">        Healthy:     <span class="literal">true</span>,</span><br><span class="line">        Ephemeral:   <span class="literal">true</span>,</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">if</span> !success &#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//获取配置</span></span><br><span class="line">    content, err := configClient.GetConfig(</span><br><span class="line">        vo.ConfigParam&#123;</span><br><span class="line">            DataId: <span class="string">&quot;Nacos上配置的配置文件名&quot;</span>,</span><br><span class="line">            Group:  <span class="string">&quot;DEFAULT_GROUP&quot;</span>&#125;)</span><br><span class="line">    viper := viper.New()</span><br><span class="line">    v := viper</span><br><span class="line">    <span class="comment">//配置读取文件类型</span></span><br><span class="line">    v.SetConfigType(<span class="string">&quot;yaml&quot;</span>)</span><br><span class="line">    <span class="comment">//读取配置文件内容</span></span><br><span class="line">    v.ReadConfig(strings.NewReader(content))</span><br><span class="line">    <span class="comment">//监听配置文件变动，重新解析配置</span></span><br><span class="line">    v.OnConfigChange(<span class="function"><span class="keyword">func</span><span class="params">(in fsnotify.Event)</span></span> &#123;</span><br><span class="line">        <span class="keyword">if</span> err := v.Unmarshal(&amp;CONFIG); err != <span class="literal">nil</span> &#123;</span><br><span class="line">            <span class="built_in">panic</span>(err)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="comment">//将配置映射成结构体</span></span><br><span class="line">    <span class="keyword">if</span> err := v.Unmarshal(&amp;CONFIG); err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="built_in">panic</span>(err)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+            </div>
+
+            
+                <div class="post-copyright-info">
+                    
+<div class="article-copyright-info-container">
+    <ul class="copyright-info-content">
+        <li class="post-title">
+            <span class="type">Post title</span>: <span class="content">基于Gin搭建项目框架并集成Nacos实现服务注册</span>
+        </li>
+        <li class="post-author">
+            <span class="type">Post author</span>: <span class="content">ycshang</span>
+        </li>
+        <li class="post-time">
+            <span class="type">Create time</span>: <span class="content">2023-01-25 21:55:14</span>
+        </li>
+        <li class="post-link">
+            <span class="type">Post link</span>: <span class="content">2023/01/25/基于Gin搭建项目框架并集成Nacos实现服务注册/</span>
+        </li>
+        <li class="post-license">
+            <span class="type">Copyright notice</span>: <span class="content">All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.</span>
+        </li>
+    </ul>
+    <div class="copy-copyright-info flex-center tooltip" data-content="Copy copyright info" data-offset-y="-2px">
+        <i class="fa-solid fa-copy"></i>
+    </div>
+</div>
+
+                </div>
+            
+
+            
+                <ul class="post-tags-box">
+                    
+                        <li class="tag-item">
+                            <a href="/tags/Go/">#Go</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            
+
+            
+                <div class="article-nav">
+                    
+                    
+                        <div class="article-next">
+                            <a class="next"
+                               rel="next"
+                               href="/2022/11/25/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%86%85%E7%9A%84%E6%8B%A6%E6%88%AA%E8%BF%87%E6%BB%A4%E4%B8%8E%E7%9B%91%E5%90%AC/"
+                            >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">生命周期内的拦截过滤与监听</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                                <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                            </a>
+                        </div>
+                    
+                </div>
+            
+
+            
+                <div class="comment-container">
+                    
+<div class="comments-container">
+    <div id="comments-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments"></i>&nbsp;Comments
+    </div>
+    
+        
+            
+
+    <div class="gitalk-comment-container">
+        <div id="gitalk-container"></div>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.css">
+        <script data-pjax src="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+        <script data-pjax>
+          function loadGitalk() {
+            let __gitalk__pathname = decodeURI(location.pathname);
+            const __gitalk__pathnameLength = __gitalk__pathname.length;
+            const __gitalk__pathnameMaxLength = 50;
+            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
+              __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
+            }
+
+            try {
+              Gitalk && new Gitalk({
+                clientID: 'bf86f2a0722d8fa6a221',
+                clientSecret: 'b7e512764db8cd8cf5b3bed693958563312e06df',
+                repo: 'ycshang-talk-comments',
+                owner: 'ycshang123',
+                admin: 'ycshang123',
+                id: __gitalk__pathname,
+                proxy: '',
+                language: 'en'
+              }).render('gitalk-container');
+            } catch (e) {
+              window.Gitalk = null;
+            }
+          }
+
+          if ('true' === 'true') {
+            const loadGitalkTimeout = setTimeout(() => {
+              loadGitalk();
+              clearTimeout(loadGitalkTimeout);
+            }, 1000);
+          } else {
+            window.addEventListener('DOMContentLoaded', loadGitalk);
+          }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+                </div>
+            
+        </div>
+
+        
+            <div class="toc-content-container">
+                <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81Windows-%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA-Go-%E7%8E%AF%E5%A2%83"><span class="nav-text">一、Windows 如何搭建 Go 环境</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E4%B8%8B%E8%BD%BD-Go-%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E5%8C%85"><span class="nav-text">1、下载 Go 语言开发包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E5%AE%89%E8%A3%85-Go-%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E5%8C%85"><span class="nav-text">2、安装 Go 语言开发包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81%E8%AE%BE%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-text">3、设置环境变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E3%80%81%E4%B8%8B%E8%BD%BD%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7%E5%B9%B6%E8%AE%BE%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-text">4、下载开发工具并设置环境变量</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81Golang-%E7%9A%84%E9%A1%B9%E7%9B%AE%E6%A1%86%E6%9E%B6%E6%98%AF%E4%BB%80%E4%B9%88%E6%A0%B7%E5%AD%90%E7%9A%84%EF%BC%9F"><span class="nav-text">二、Golang 的项目框架是什么样子的？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AFGin-%E5%BA%94%E8%AF%A5%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%EF%BC%9F"><span class="nav-text">三、什么是Gin,应该如何使用？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%A6%82%E4%BD%95%E9%9B%86%E6%88%90Nacos%E9%9B%86%E6%88%90%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%8E%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%9A%84%E5%8A%A8%E6%80%81%E8%AF%BB%E5%8F%96"><span class="nav-text">四、如何集成Nacos集成服务注册与配置文件的动态读取</span></a></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            
+<footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+                <span>2021</span> -
+            
+            2023
+            
+                &nbsp;<i class="fas fa-heart icon-animate"></i>
+                &nbsp;<a href="/">ycshang</a>
+            
+        </div>
+        
+            <script async data-pjax
+                    src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                
+                
+                    Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.6.1</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="tools-item flex-center go-to-comments">
+                <i class="fas fa-comment"></i>
+                <span class="post-comments-count"></span>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="close-popup-btn">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.6.1/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.6.1/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.6.1/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.6.1/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.6.1/source/js/dark-light-toggle.js"></script>
+
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.6.1/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.6.1/source/js/code-block.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.6.1/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.6.1/source/js/post-helper.js"></script>
+        
+            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.6.1/source/js/libs/anime.min.js"></script>
+        
+        
+            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.6.1/source/js/toc.js"></script>
+        
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.6.1/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>
